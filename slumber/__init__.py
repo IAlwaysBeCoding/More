@@ -193,13 +193,23 @@ class API(ResourceAttributesMixin, object):
 
     resource_class = Resource
 
-    def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None):
+    def __init__(self, base_url=None, auth=None, format=None, append_slash=True, session=None, serializer=None,session_params={}):
         if serializer is None:
             serializer = Serializer(default=format)
 
         if session is None:
             session = requests.session()
-
+            
+            stream = session_params.pop('stream',False)                                                                       
+            proxies = session_params.pop('proxies',{})                                                                        
+            verify = session_params.pop('verify',True)                                                                        
+            headers = session_params.pop('headers',{})                                                                        
+                                                                                                                
+            session.stream = stream                                                                                           
+            session.proxies = proxies                                                                                         
+            session.verify = verify                                                                                           
+            session.headers.update(headers)
+        
         if auth is not None:
             session.auth = auth
 
