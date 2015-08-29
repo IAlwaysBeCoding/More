@@ -64,6 +64,39 @@ Turning SSL certificate verification off::
 
     API("https://path/to/my/api", session=requests.Session(verify=False))
 
+
+User-Agent
+----------------
+
+Adding a different User-Agent::
+
+     user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 " \
+                "(KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
+     
+    #Also, additional headers can be passed through 
+    #the headers parameter when construction the Session object 
+    headers = {'User-Agent':user_agent}
+    API("https://path/to/mdy/api", 
+        session=requests.Session(headers=headers))
+
+Proxies
+----------------
+
+Using http(s) proxies::
+
+    #You need a http and https proxy. If its the same proxy, then use
+    # the same proxy for http and https.
+    proxies = {'http':'http://111.111.111.111:8080',
+                'https':'http://111.111.111.111:8080'}
+    
+    headers = {'User-Agent':user_agent}
+    #proxies with username and password
+    authenticated_prxoies = {'http':'http://user:password@111.111.111.111:8080',
+                            'https':'http://user:password@111.111.111.111:8080'}
+    API("https://path/to/my/api", 
+        session=requests.Session(headers=headers))
+
+
 For more information see the documentation for ``requests.Session``.
 
 File uploads
